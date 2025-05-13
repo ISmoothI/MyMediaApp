@@ -90,7 +90,6 @@ fun AddPreview(){
     Add(navController)
 }
 
-//TODO: FIX rating not staying
 @Composable
 fun RatingDialog(rating: Int, onValueChange: (String) -> Unit, onDismissRequest: () -> Unit, onConfirmRequest: () -> Unit) {
     Dialog(onDismissRequest = { onDismissRequest() }) {
@@ -160,9 +159,7 @@ fun GenreDialog(movieID: Long, genres: MutableList<Genre>, genresAvailable: List
                 Text( text = "Or add new genre:")
                 BasicTextField(
                     value = genreName,
-                    onValueChange = {
-                        genreName = it
-                    },
+                    onValueChange = { genreName = it },
                     textStyle = MaterialTheme.typography.titleMedium.copy(
                         color = Color.White,
                         fontWeight = FontWeight.Bold
@@ -395,7 +392,9 @@ fun Add(navController: NavHostController, movieID: Long = 0, movieViewModel: Mov
                                         showRatingPopup = false
                                     },
                                     onConfirmRequest = {
-                                        movieViewModel.updateRating(movieID, rating)
+                                        if(movieID != 0.toLong()) {
+                                            movieViewModel.updateRating(movieID, rating)
+                                        }
                                         showRatingPopup = false
                                     }
                                 )

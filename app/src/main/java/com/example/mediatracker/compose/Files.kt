@@ -166,11 +166,11 @@ fun Files(navController: NavHostController, movieViewModel: MovieViewModel = hil
                             Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                         }
                     },
-                    actions = {
-                        IconButton(onClick = {  }) {
-                            Icon(imageVector = Icons.Outlined.Info, contentDescription = "Info")
-                        }
-                    }
+//                    actions = {
+//                        IconButton(onClick = {  }) {
+//                            Icon(imageVector = Icons.Outlined.Info, contentDescription = "Info")
+//                        }
+//                    }
                 )
             }
         ) { innerPadding ->

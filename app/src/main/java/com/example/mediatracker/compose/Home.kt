@@ -156,7 +156,7 @@ fun Home(navController: NavHostController, movieViewModel: MovieViewModel = hilt
 
         Column(modifier = Modifier.padding(12.dp).verticalScroll(scrollState), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             if (movieList.isEmpty()) {
-                Text(text = "Import a file or start building your media list to get started!")
+                Text(text = "Import a file or start building your movie list to get started!")
             }
             else {
                 //LATEST ENTRY

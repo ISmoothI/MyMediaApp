@@ -1,5 +1,6 @@
 package com.example.mediatracker.data.movie
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -80,6 +81,7 @@ class MovieViewModel @Inject constructor(private val movieRepository: MovieRepos
         viewModelScope.launch {
             _isLoading.value = true
             movieRepository.updateRating(movieId, rating)
+            _movieWithGenresEntry.value = movieRepository.getMovieWithGenres(movieId)
             _isLoading.value = false
         }
     }

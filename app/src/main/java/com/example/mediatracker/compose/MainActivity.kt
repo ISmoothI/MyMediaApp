@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
+//TODO: ADD WATCHLIST SECTION, ADD SEARCH-BY-GENRE SECTION
 @Composable
 fun ScaffoldNavBar() {
     val navController = rememberNavController()
