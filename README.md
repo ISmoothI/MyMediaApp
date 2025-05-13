@@ -22,5 +22,10 @@ Want to make constant backups of your movie library? Use the export tool found u
 - Room for database and entry storage along with Hilt for dependency injection
 - MVVM architecture that prioritizes safe couratine and state management usage to ensure data is being manipulated or retrieved as required
 
+## Figma Design
+Below is the initial design made for the app where I plan to implement at least 90% of the features that can be seen.
+
+![image](https://github.com/user-attachments/assets/f4c5aa2f-af42-4187-b6f9-9d687b2d8c95)
+
 # ❤️ Thank You
 Thank you for checking out the app I made for learning and personal use! It's not perfect, but I plan to update it as I learn more overtime. 😃
