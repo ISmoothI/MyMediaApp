@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +15,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,8 +33,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -44,12 +50,13 @@ import com.example.mediatracker.data.movie.Movie
 import com.example.mediatracker.data.movie.MovieViewModel
 import com.example.mediatracker.R
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun Search(navController: NavHostController, movieViewModel: MovieViewModel = hiltViewModel()){
     var searchText by remember { mutableStateOf("") }
     val searchResults by movieViewModel.getMoviesByTitle.collectAsState(emptyList())
     var isTextActive by remember { mutableStateOf(false) }
+    var dropdownClicked by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -76,7 +83,7 @@ fun Search(navController: NavHostController, movieViewModel: MovieViewModel = hi
                         },
                         placeholder = { Text(text = "Search") },
                         trailingIcon = {
-                            if (isTextActive) {
+                            if(isTextActive) {
                                 IconButton(onClick = {
                                     searchText = ""
                                     movieViewModel.setSearch(searchText)
@@ -86,15 +93,32 @@ fun Search(navController: NavHostController, movieViewModel: MovieViewModel = hi
                             }
                         }
                     ) {
-
                     }
                 }
             )
         }
     ) { innerPadding ->
-        LazyColumn(modifier = Modifier.padding(innerPadding).padding(12.dp).fillMaxSize(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-            items(searchResults) { movie ->
-                MovieInfoBox(navController, movie)
+        Column(modifier = Modifier.padding(innerPadding)) {
+            //FUTURE FILTER IMPLEMENTATION
+//            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+//                IconButton(onClick = { dropdownClicked = !dropdownClicked }) {
+//                    Image(
+//                        imageVector = if (dropdownClicked) Icons.Default.KeyboardArrowDown else Icons.Default.KeyboardArrowUp,
+//                        colorFilter = ColorFilter.tint(color = Color.White),
+//                        contentDescription = "Dropdown"
+//                    )
+//                }
+//                Text(text = "Filters")
+//            }
+//            if(dropdownClicked) {
+//                FlowRow {
+//
+//                }
+//            }
+            LazyColumn(modifier = Modifier.padding(12.dp).fillMaxSize(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                items(searchResults) { movie ->
+                    MovieInfoBox(navController, movie)
+                }
             }
         }
     }

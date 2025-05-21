@@ -17,6 +17,10 @@ class MovieRepository @Inject constructor(private val movieDao: MovieDao) {
         return movieDao.getMovie(movieId)
     }
 
+    suspend fun getMoviesOnWatchlist(): List<Movie> {
+        return movieDao.getMoviesOnWatchlist()
+    }
+
     fun getMoviesByTitle(search: String): Flow<List<Movie>> = movieDao.getMoviesByTitle(search)
 
     suspend fun getAllMovies(): List<Movie> {

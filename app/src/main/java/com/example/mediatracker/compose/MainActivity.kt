@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Home
@@ -77,7 +79,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-//TODO: ADD WATCHLIST SECTION, ADD SEARCH-BY-GENRE SECTION
+//TODO: FIX WATCHLIST SECTION, ADD SEARCH-BY-GENRE SECTION
 @Composable
 fun ScaffoldNavBar() {
     val navController = rememberNavController()
@@ -98,8 +100,8 @@ fun ScaffoldNavBar() {
                         IconButton(onClick = { navController.navigate("add/${0}") }) {
                             Icon(imageVector = Icons.Filled.Add, contentDescription = "Add movie")
                         }
-                        IconButton(onClick = {}) {
-                            Icon(imageVector = Icons.Default.Home, contentDescription = "Lists")
+                        IconButton(onClick = { navController.navigate("lists") }) {
+                            Icon(imageVector = Icons.AutoMirrored.Filled.List, contentDescription = "Watchlist")
                         }
                         IconButton(onClick = { navController.navigate("files") }) {
                             Icon(imageVector = Icons.Default.Settings, contentDescription = "Settings")
@@ -133,6 +135,20 @@ fun ScaffoldNavBar() {
                 }
                 composable(Screens.Files.screen){
                     Files(navController)
+                }
+                composable(route = Screens.Genre.screen,
+                    arguments = listOf(
+                        navArgument("genreid") {
+                            type = NavType.LongType
+                        }
+                    )
+                ){ backStackEntry ->
+                    val genreID: Long = backStackEntry.arguments?.getLong("genreid") ?: -1
+//                    Log.i("BACKSTACK_TEST", genreID.toString())
+                    Genre(navController, genreID)
+                }
+                composable(Screens.Lists.screen){
+                    Lists(navController)
                 }
             }
         }

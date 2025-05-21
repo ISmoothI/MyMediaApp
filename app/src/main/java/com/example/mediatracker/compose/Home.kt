@@ -74,6 +74,7 @@ fun MovieInfoBox(navController: NavController, movie: Movie) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(text = movie.year.toString(), style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
                     Text(text = "${movie.runtime}m", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+                    Text(text = if(movie.rating == 0) "NR" else "${movie.rating}/10", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
                 }
             }
         }
@@ -167,7 +168,7 @@ fun Home(navController: NavHostController, movieViewModel: MovieViewModel = hilt
                 Column {
                     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
                         Text(text = "Watchlist", style = MaterialTheme.typography.headlineSmall)
-                        IconButton(onClick = {  }) {
+                        IconButton(onClick = { navController.navigate("lists") }) {
                             Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Search for similar titles")
                         }
                     }
@@ -181,9 +182,6 @@ fun Home(navController: NavHostController, movieViewModel: MovieViewModel = hilt
                 Column {
                     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
                         Text(text = "Random Picks", style = MaterialTheme.typography.headlineSmall)
-                        IconButton(onClick = { } ) {
-                            Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Search for similar titles")
-                        }
                     }
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                         val randRecList = listOf(movieList.random(), movieList.random(), movieList.random(), movieList.random(), movieList.random())

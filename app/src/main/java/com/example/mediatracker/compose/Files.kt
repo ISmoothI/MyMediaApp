@@ -81,8 +81,8 @@ fun importFile(movieViewModel: MovieViewModel, context: Context, csvUri: Uri) {
                 tagline = match.groupValues[6],
                 rating = match.groupValues[7].toInt(),
                 note = match.groupValues[8],
-                ownPhysical = false,
-                ownDigital = false
+                watchlist = false,
+                completed = false
             ))
         }
     }

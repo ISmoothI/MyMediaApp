@@ -77,6 +77,15 @@ class MovieViewModel @Inject constructor(private val movieRepository: MovieRepos
         }
     }
 
+    fun getMoviesOnWatchlist() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            val result = movieRepository.getMoviesOnWatchlist()
+            _entries.value = result
+            _isLoading.value = false
+        }
+    }
+
     fun updateRating(movieId: Long, rating: Int) {
         viewModelScope.launch {
             _isLoading.value = true

@@ -27,11 +27,14 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.twotone.Add
 import androidx.compose.material.icons.twotone.Star
 import androidx.compose.material3.ButtonDefaults
@@ -63,6 +66,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -249,8 +253,8 @@ fun Add(navController: NavHostController, movieID: Long = 0, movieViewModel: Mov
         var body by remember { mutableStateOf(movieInfo.movie.body) }
         var rating by remember { mutableIntStateOf(movieInfo.movie.rating) }
         var note by remember { mutableStateOf(movieInfo.movie.note) }
-        var ownPhysical by remember { mutableStateOf(movieInfo.movie.ownPhysical) }
-        var ownDigital by remember { mutableStateOf(movieInfo.movie.ownDigital) }
+        var onWatchlist by remember { mutableStateOf(movieInfo.movie.watchlist) }
+        var isCompleted by remember { mutableStateOf(movieInfo.movie.completed) }
         Log.d("MovieDetails", "Fetched movie: $movieInfo")
         val genres by remember { mutableStateOf(movieInfo.genres) }
 
@@ -314,8 +318,8 @@ fun Add(navController: NavHostController, movieID: Long = 0, movieViewModel: Mov
                                     tagline = tagline,
                                     rating = rating,
                                     note = note,
-                                    ownPhysical = ownPhysical,
-                                    ownDigital = ownDigital
+                                    watchlist = onWatchlist,
+                                    completed = isCompleted
                                 )
                                 movieViewModel.upsertMovie(newMovieInfo)
 
@@ -401,10 +405,13 @@ fun Add(navController: NavHostController, movieID: Long = 0, movieViewModel: Mov
                             }
 
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                IconButton(onClick = {  }) {
-                                    Icon(imageVector = Icons.TwoTone.Add, contentDescription = "Add to List")
+                                IconButton(onClick = {
+                                    onWatchlist = !onWatchlist
+                                    //TODO: ADD UPDATE FOR WATCHLIST
+                                }) {
+                                    Icon(imageVector = if(onWatchlist) Icons.Default.Check else Icons.AutoMirrored.Filled.List, contentDescription = "Add to Watchlist")
                                 }
-                                Text(text = "Add to List")
+                                Text(text = if(onWatchlist) "Remove from List" else "Add to List", textAlign = TextAlign.Center)
                             }
                         }
                         Column(modifier = Modifier.weight(2f).padding(2.dp), verticalArrangement = Arrangement.spacedBy(4.dp), horizontalAlignment = Alignment.Start) {
@@ -550,7 +557,7 @@ fun Add(navController: NavHostController, movieID: Long = 0, movieViewModel: Mov
                         FlowRow(modifier = Modifier.fillMaxWidth().padding(all = 12.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                             if (buttonClicked == "Genres") {
                                 genres.forEach { genre ->
-                                    GenreTextButton(genreName = genre.name, onClick = { } )
+                                    GenreTextButton(genreName = genre.name, onClick = { navController.navigate("genre/${genre.genreId}") } )
                                 }
                                 GenreTextButton(genreName = "+", onClick = { showGenreDialog = true })
 

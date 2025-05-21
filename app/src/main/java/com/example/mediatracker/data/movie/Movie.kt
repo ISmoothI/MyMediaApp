@@ -16,6 +16,6 @@ data class Movie(
     @ColumnInfo(name = "tagline") var tagline: String = "",
     @ColumnInfo(name = "rating") var rating: Int = 0,
     @ColumnInfo(name = "note") var note: String = "",
-    @ColumnInfo(name = "own_physical") var ownPhysical: Boolean = false,
-    @ColumnInfo(name = "own_digital") var ownDigital: Boolean = false,
+    @ColumnInfo(name = "watchlist") var watchlist: Boolean = false,
+    @ColumnInfo(name = "completed") var completed: Boolean = false,
 )

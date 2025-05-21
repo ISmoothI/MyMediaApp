@@ -24,11 +24,17 @@ interface MovieDao {
     @Query("UPDATE movies SET rating = :rating WHERE movieId = :movieId")
     suspend fun updateRating(movieId: Long, rating: Int)
 
+//    @Query("UPDATE movies SET watchlist = :watchlist WHERE movieId = :movieId")
+//    suspend fun updateWatchlist(movieId: Long, watchlist: Boolean)
+
     @Query("SELECT * FROM movies WHERE movieId = :movieId")
     suspend fun getMovie(movieId: Long): Movie
 
     @Query("SELECT * FROM movies")
     suspend fun getAllMovies(): List<Movie>
+
+    @Query("SELECT * FROM movies WHERE watchlist = 1")
+    suspend fun getMoviesOnWatchlist(): List<Movie>
 
     @Query("SELECT * FROM movies WHERE title LIKE :search")
     fun getMoviesByTitle(search: String): Flow<List<Movie>>
